@@ -42,6 +42,8 @@ ENV_COOKIES = (
     '__utmb'
 )
 
+MAX_DELAY = 30
+
 def jsonify(*args, **kwargs):
     response = flask_jsonify(*args, **kwargs)
     if not response.data.endswith(b'\n'):
@@ -513,8 +515,8 @@ def digest_auth(qop=None, user='user', passwd='passwd', algorithm='MD5', stale_a
 
 @app.route('/delay/<delay>')
 def delay_response(delay):
-    """Returns a delayed response"""
-    delay = min(float(delay), 10)
+    """Returns a delayed response."""
+    delay = min(float(delay), MAX_DELAY)
 
     time.sleep(delay)
 
